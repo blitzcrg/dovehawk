@@ -28,8 +28,6 @@ export {
 
 }
 
-
-
 # Modelled on the original function from ActiveHTTP but they stripped out the newlines and joined
 # everything together. Need to keep the original string vector to process individual lines.
 # Original Source: https://github.com/zeek/zeek/blob/master/scripts/base/utils/active-http.zeek
@@ -43,13 +41,16 @@ function request2curl(r: ActiveHTTP::Request, bodyfile: string, headersfile: str
 	                safe_shell_quote(r$method));
 
 
-	cmd = fmt("%s -m %.0f", cmd, r$max_time);
+	cmd = fmt("%s -m %.0f", cmd, dovehawk::max_time);
 
 	if ( r?$client_data )
 		cmd = fmt("%s -d @-", cmd);
 
 	if ( r?$addl_curl_args )
 		cmd = fmt("%s %s", cmd, r$addl_curl_args);
+
+	if ( dovehawk::accept_unsigned == T )
+		cmd = fmt("%s %s", cmd, "-k")
 
 	cmd = fmt("%s \"%s\"", cmd, safe_shell_quote(r$url));
 	# Make sure file will exist even if curl did not write one.

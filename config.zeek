@@ -9,7 +9,6 @@ export {
 	global SLACK_URL = ""; #optional web hook for Slack
 	global SIG_PREFIX = "MISP:"; #prefix for our signatures to hook alerts
 
-
 	# Maximum number of hits per indicator item before suppressing remote alerts
 	global MAX_HITS: int = 100;
 
@@ -23,8 +22,12 @@ export {
 	#skip signature download if recent
 	global SKIP_SIGNATURE_DOWNLOAD: bool = T;
 
-
 	global signature_refresh_period = 4hr  &redef;
 
+	#cURL accept unsigned certificates (default is False)
+	global accept_unsigned: bool = F;
+
+	#cURL connection timeout (seconds)
+	global max_time: int = 180;
 
 }
