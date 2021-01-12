@@ -41,7 +41,7 @@ function request2curl(r: ActiveHTTP::Request, bodyfile: string, headersfile: str
 	                safe_shell_quote(r$method));
 
 
-	cmd = fmt("%s -m %.0f", cmd, dovehawk::max_time);
+	cmd = fmt("%s -m %s", cmd, dovehawk::max_time);
 
 	if ( r?$client_data )
 		cmd = fmt("%s -d @-", cmd);
@@ -50,7 +50,7 @@ function request2curl(r: ActiveHTTP::Request, bodyfile: string, headersfile: str
 		cmd = fmt("%s %s", cmd, r$addl_curl_args);
 
 	if ( dovehawk::accept_unsigned == T )
-		cmd = fmt("%s %s", cmd, "-k")
+		cmd = fmt("%s %s", cmd, "-k");
 
 	cmd = fmt("%s \"%s\"", cmd, safe_shell_quote(r$url));
 	# Make sure file will exist even if curl did not write one.
